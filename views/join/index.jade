@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+  .container
+    h1.page-header 설문조사 참여
+    form(action='/user', method='POST')
+      .form-group
+        h3 간단한 세 단계로 나만의 설문조사 만들기
+        ol
+          li 설문조사 디자인 결정하기
+          li 질문추가하기
+          li 설문조사 보내기
+        div.form-actions
+          a.btn.btn-default(href='/form') 설문조사 만들기
+    br
+    a(href='/form') To form
+
+
+  
+            
