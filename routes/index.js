@@ -32,20 +32,21 @@ router.post('/signin', function(req, res, next) {
     } else {
       req.session.user = user;
       req.flash('success', '로그인 되었습니다.');
-      res.redirect('/join');
+      res.redirect('/survey');
     }
   });
 });
 
+// survey page - 설문지 페이지
+router.get('/survey', function(req, res, next) {
+  res.render('survey/index',{title: 'survey'});
+});
 
-// join page
-router.get('/join', function(req, res, next) {
-  res.render('join/index',{title: 'join'});
+// create page - 설문지 생성 페이지
+router.get('/create', function(req, res, next) {
+  res.render('survey/create',{title: 'create'});
 });
-// forms page
-router.get('/form', function(req, res, next) {
-  res.render('form/index',{title: 'form'});
-});
+
 // preivew page
 router.get('/preview', function(req, res, next) {
   res.render('preview/index',{title: 'preview'});

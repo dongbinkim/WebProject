@@ -37,11 +37,11 @@ function validateForm(form, options) {
   if (form.password.length < 6) {
     return '비밀번호는 6글자 이상이어야 합니다.';
   }
-
+  
   return null;
 }
 
-// user
+// user page
 router.get('/', needAuth, function(req, res, next) {
   User.find({}, function(err, user) {
     if (err) {

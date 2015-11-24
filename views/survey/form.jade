@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+  .container
+  
+    if survey.id
+      h1.page-header 설문조사 수정
+    else
+      h1.page-header 설문조사 작성
+
+    // survey.id이면 "/survey/#{survey.id}?_method=PUT"를
+    // 아니면 "/survey", method='POST'를 실행
+    form(action = (survey.id) ? "/survey/#{survey.id}?_method=PUT" : "/survey", method='POST')
+      .form-group
+        label(for='title') Title
+        input.form-control(type='text', id='title', name='title', placeholder='title', value=survey.title)
+      .form-group
+        label(for='content') Content
+        textarea.form-control(id='content', rows='10', name='content', placeholder='content here')= post.content
+      .form-group
+        label(for='content') Question
+        textarea.form-control(id='quest', rows='10', name='quest', placeholder='quest here', value=survey.quest)
+      div.form-actions
+        a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
+        | 
+        button.btn.btn-primary(type='submit') 완료
