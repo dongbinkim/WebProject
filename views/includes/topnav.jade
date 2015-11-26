@@ -11,18 +11,18 @@
     #navbar.collapse.navbar-collapse
       ul.nav.navbar-nav
         li
-          a(href='/') Todo List
+          a(href='/survey') New Survey
         li
-          a(href='/user') Users
+          a(href='/users') Users
       ul.nav.navbar-nav.navbar-right
-        if (currentUser) 
+        if (!currentUser) 
           li
-            a(href='/user/#{currentUser._id}') 프로필
+            a(href='/signin') Signin
           li
-            a(href='/user/signout') 로그아웃
+            a(href='/users/new') Signup
         else
           li
-            a(href='/user') 로그인
+            a(href='/users/#{currentUser._id}') Profile
           li
-            a(href='/user/regist') 회원가입
+            a(href='/signout') Signout
           
