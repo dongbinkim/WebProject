@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+  .container
+    h1.page-header= survey.title
+    p
+      span at #{moment(survey.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
+    p.well(style='white-space:pre;')= survey.content
+    
+    hr
+    h3 Question
+    table.table
+      tr
+        th question
+        th answer
+        th time
+      each quest in quests
+        tr
+          td= quest.question
+          td= quest.answer
+          td= moment(quest.createdAt).format('YYYY/MM/DD')
+    
+    form.form-inline(action='/surveys/' + survey._id + '/quests', method='POST')
+      .form-group
+        label.sr-only(for='question') question
+        input.form-control(name='question', placeholder='question')
+      .form-group
+        label.sr-only(for='answer') answer
+        input.form-control(name='answer', size=50, placeholder='answer')
+      button.btn.btn-info 댓글저장
+    
+    hr    
+    a.btn.btn-default(href='/surveys/list') 목록

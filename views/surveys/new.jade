@@ -1,0 +1,47 @@
+extends ../layout
+
+block content
+  .container
+  
+    h1.page-header 설문지 작성
+    
+    form(action = "/surveys", method='POST')
+      .form-header
+        .form-group
+          label(for='title') Title
+          input.form-control(type='text', id='title', name='title', placeholder='title')
+        .form-group
+          label(for='content') Content
+          textarea.form-control(id='content', rows='2', name='content', placeholder='content here')
+        .form-group
+          label Category
+          select.form-control(id='category')
+            option(id='choice' value='객관식', selected) 객관식
+            option(id='short' value='단일문항') 단일문항
+            option(id='long' value='의견') 의견
+      div.form-actions
+        a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
+        | 
+        button.btn.btn-primary(type='submit') 완료
+    
+        h3 Question
+        form.form-inline(action='/surveys/' + survey._id + '/quests', method='POST')
+          .form-group
+            label.sr-only(for='question') question
+            input.form-control(name='question', placeholder='question')
+          .form-group
+            label.sr-only(for='answer') answer
+            input.form-control(name='answer', size=50, placeholder='answer' readonly)
+          div.form-actions
+            button.btn.btn-info 댓글저장
+    
+    
+        
+      
+             
+      
+    
+    
+      
+
+      

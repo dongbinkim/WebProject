@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+  .container
+    h1.page-header= survey.title
+    p
+      b by #{survey.email}
+      | 
+      span at #{moment(survey.createdAt).format('YYYY-MM-DD HH:mm:ss')} 
+
+    p.well(style='white-space:pre;')= survey.content
+    p.well(style='white-space:pre;')= question.content
+    p.well(style='white-space:pre;')= answer.content
+  
+    a.btn.btn-default(href='/surveys/list') 목록

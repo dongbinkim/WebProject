@@ -10,8 +10,8 @@ var flash = require('connect-flash');
 var mongoose   = require('mongoose');
 
 var routes = require('./routes/index');
-var user = require('./routes/user');
-var survey = require('./routes/survey');
+    users = require('./routes/users');
+    surveys = require('./routes/surveys');
 
 var app = express();
 
@@ -21,6 +21,7 @@ app.set('view engine', 'jade');
 if (app.get('env') === 'development') {
   app.locals.pretty = true;
 }
+app.locals.moment = require('moment');
 
 // mongodb connect
 mongoose.connect('mongodb://dongbin:dlem13587946@ds045064.mongolab.com:45064/wp');
@@ -50,8 +51,8 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', routes);
-app.use('/user', user);
-app.use('/survey', survey);
+app.use('/users', users);
+app.use('/surveys', surveys);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

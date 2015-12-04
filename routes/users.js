@@ -52,17 +52,49 @@ router.get('/', needAuth, function(req, res, next) {
 });
 
 // signup page - 회원가입 페이지
-router.get('/signup', function(req, res, next) {
+router.get('/new', function(req, res, next) {
   res.render('users/new', {messages: req.flash()});
 });
 
+// 회원가입
+router.post('/', function(req, res, next) {
+  var err = validateForm(req.body, {needPassword: true});
+  if (err) {
+    req.flash('danger', err);
+    return res.redirect('back');
+  }
+
+  User.findOne({email: req.body.email}, function(err, user) {
+    if (err) {
+      return next(err);
+    }
+    if (user) {
+      req.flash('danger', '동일한 이메일 주소가 이미 존재합니다.');
+      res.redirect('back');
+    }
+    var newUser = new User({
+      name: req.body.name,
+      email: req.body.email,
+    });
+    newUser.password = req.body.password;
+
+    newUser.save(function(err) {
+      if (err) {
+        return next(err);
+      } else {
+        req.flash('success', '가입이 완료되었습니다. 로그인 해주세요.');
+        res.redirect('/');
+      }
+    });
+  });
+});
 // 회원정보 수정
 router.get('/:id/edit', function(req, res, next) {
   User.findById(req.params.id, function(err, user) {
     if (err) {
       return next(err);
     }
-    res.render('users/edit', {users: users});
+    res.render('users/edit', {user: user});
   });
 });
 
@@ -114,38 +146,16 @@ router.delete('/:id', function(req, res, next) {
   });
 });
 
-// 회원가입
-router.post('/', function(req, res, next) {
-  var err = validateForm(req.body, {needPassword: true});
-  if (err) {
-    console.log(err);
-    req.flash('danger', err);
-    return res.redirect('back');
-  }
-
-  User.findOne({email: req.body.email}, function(err, user) {
+// 회원 정보 프로필
+router.get('/:id', function(req, res, next) {
+  User.findById(req.params.id, function(err, user) {
     if (err) {
       return next(err);
     }
-    if (user) {
-      req.flash('danger', '동일한 이메일 주소가 이미 존재합니다.');
-      res.redirect('back');
-    }
-    var newUser = new User({
-      name: req.body.name,
-      email: req.body.email,
-    });
-    newUser.password = req.body.password;
-
-    newUser.save(function(err) {
-      if (err) {
-        return next(err);
-      } else {
-        req.flash('success', '가입이 완료되었습니다. 로그인 해주세요.');
-        res.redirect('/');
-      }
-    });
+    res.render('users/show', {user: user});
   });
 });
+
+
 
 module.exports = router;
