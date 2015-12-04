@@ -23,17 +23,7 @@ block content
         a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
         | 
         button.btn.btn-primary(type='submit') 완료
-    
-        h3 Question
-        form.form-inline(action='/surveys/' + survey._id + '/quests', method='POST')
-          .form-group
-            label.sr-only(for='question') question
-            input.form-control(name='question', placeholder='question')
-          .form-group
-            label.sr-only(for='answer') answer
-            input.form-control(name='answer', size=50, placeholder='answer' readonly)
-          div.form-actions
-            button.btn.btn-info 댓글저장
+  
     
     
         
