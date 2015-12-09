@@ -20,24 +20,16 @@ router.get('/new', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  console.log(req.params.id);
-  console.log(req.body);
   var survey = new Survey({
     title: req.body.title,
-    content: req.body.content,
+    content: req.body.content
   });
-
   survey.save(function(err){
     if(err) {
       return next(err);
     }
-    Survey.findById(req.params.id, function(err) {
-      if (err) {
-        return next(err);
-      }
-      res.redirect('/surveys/' + req.params.id);
-    });
   });
+  res.redirect('/surveys/list');
 });
 
 router.get('/list', function(req, res, next) {
@@ -66,6 +58,7 @@ router.get('/:id', function(req, res, next) {
 router.post('/:id/quests', function(req, res, next) {
   var quest = new Quest({
     survey: req.params.id,
+    category: req.body.category,
     question: req.body.question,
     answer: req.body.answer
   });
