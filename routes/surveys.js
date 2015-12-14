@@ -4,8 +4,17 @@ var express = require('express');
     Quest = require('../models/Quest');
 var router = express.Router();
 
+function needAuth(req, res, next) {
+    if (req.session.user) {
+      next();
+    } else {
+      req.flash('danger', '로그인이 필요합니다.');
+      res.redirect('/signin');
+    }
+}
+
 // survey page - 설문지 페이지
-router.get('/', function(req, res, next) {
+router.get('/', needAuth, function(req, res, next) {
   Survey.find({}, function(err, surveys) {
     if (err) {
       return next(err);
@@ -15,7 +24,7 @@ router.get('/', function(req, res, next) {
 });
 
 // new page - 설문지 생성 페이지
-router.get('/new', function(req, res, next) {
+router.get('/new', needAuth, function(req, res, next) {
   res.render('surveys/new',{survey: {}});
 });
 
@@ -32,7 +41,7 @@ router.post('/', function(req, res, next) {
   res.redirect('/surveys/list');
 });
 
-router.get('/list', function(req, res, next) {
+router.get('/list', needAuth, function(req, res, next) {
   Survey.find({}, function(err, surveys) {
     if (err) {
       return next(err);
@@ -41,7 +50,7 @@ router.get('/list', function(req, res, next) {
   });
 });
 // title 누르고 내용 확인
-router.get('/:id', function(req, res, next) {
+router.get('/:id', needAuth, function(req, res, next) {
   Survey.findById({_id: req.params.id}, function(err, survey) {
     if (err) {
       return next(err);
@@ -77,7 +86,7 @@ router.post('/:id/quests', function(req, res, next) {
 });
 
 // 설문지 수정
-router.get('/:id/edit', function(req, res, next) {
+router.get('/:id/edit', needAuth, function(req, res, next) {
   Survey.findById(req.params.id, function(err, survey) {
     if (err) {
       return next(err);
@@ -106,7 +115,7 @@ router.put('/:id', function(req, res, next) {
 });
 
 // 설문 삭제
-router.delete('/:id', function(req, res, next) {
+router.delete('/:id', needAuth, function(req, res, next) {
   Survey.findOneAndRemove({_id: req.params.id}, function(err) {
     if (err) {
       return next(err);

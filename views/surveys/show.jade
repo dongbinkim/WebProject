@@ -8,99 +8,34 @@ block content
     p.well(style='white-space:pre;')= survey.content
 
     form.content(action='/surveys/' + survey._id + '/quests', method='POST')
-      .form-header
-        p.QuestPart
-      
-      hr
-      button#post-question.btn.btn-default(type='button') 문항추가 
+      p.QuestPart
+      button#addQuestion.btn.btn-default(type='button') 문항추가 
+      button#removeQuestion.btn.btn-default(type='button') 문항제거
       button.btn.btn-default(type='submit') 완료      
-      
-    script#ChoiceTemplate(type='text/template')
-      form.content
-        .form-group(id='questions')
-          label Category
-          select.form-control(id='category', name='category')
-            option(value='객관식', selected) 객관식
-            option(value='단일문항') 단일문항
-            option(value='의견') 의견
-        .form-group
-          label Q
-          input.form-control(type='text', id='question', name='quetion', placeholder='질문입력')
-        .form-group    
-          input(type='radio', disabled)
-          input(type = 'text', id='Qoption', name = 'Qoption', placeholder = '보기 입력')
-        p.AnswerPart
-          if(category==='객관식')
-            button#post-answer.btn.btn-default(type='button') 답안추가
     
-    script#ChoiceAnswerTemplate(type='text/template')
-      form.content
-        .form-group         
-          input(type='radio', disabled)
-          input(type = 'text', id='Qoption', name = 'Qoption', placeholder = '보기 입력')
-    
-    script#SingleTemplate(type='text/template')
-      form.content
-        .form-group(id='questions')
-          label Category
+    script#ChoiceQuestTemplate(type='text/javascript')
+      .form-header
+        .form-group
+          label(for='category') Category
           select.form-control(id='category', name='category')
-            option(value='객관식', selected) 객관식
-            option(value='단일문항') 단일문항
-            option(value='의견') 의견
+            option(id='choice' value='객관식', selected) 객관식
+            option(id='short' value='단일문항') 단일문항
+            option(id='long' value='의견') 의견
+        .form-group      
+          label(for='title') Q:
+          input.form-control(type='text', name='question', placeholder='Question')
         .form-group
-          label Q
-          input.form-control(type='text', id='question', name='quetion', placeholder='질문입력')
+          input(type='radio', name='answer')
+          input.form-control(type='text', name='answer', placeholder='Answer', disabled)
         .form-group
-          input.form-control(type = 'text', id='SingleOpinion', name = 'SingleOpinion', autofocus, disabled)
+          p.AnswerPart
+        button#addAnswer.btn.btn-default(type='button') 답안추가 
+          
+    script#ChoiceAnswerTemplate(type='text/javascript')
+      .form-header
+        .form-group
+          input(type='radio', name='answer')
+          input.form-control(type='text', name='answer', placeholder='Answer', disabled)
     
-    script#CommentTemplate(type='text/template')
-      form.content
-        .form-group(id='questions')
-          label Category
-          select.form-control(id='category', name='category')
-            option(value='객관식', selected) 객관식
-            option(value='단일문항') 단일문항
-            option(value='의견') 의견
-        .form-group
-          label Q
-          input.form-control(type='text', id='question', name='quetion', placeholder='질문입력')
-        .form-group
-          textarea.form-control(type = 'text', id='Opinion', name = 'Opinion', rows='10', autofocus, disabled)
           
     script(type='text/javascript', src='/javascripts/question.js')         
-             
-                   
-    
-    
-    
-    //- 
-    //- hr
-    //- h3 Questions
-    //- each quest in quests
-    //-   label Category
-    //-   p= quest.category
-    //-   label Question
-    //-   p= quest.question
-    //-   label Answer
-    //-   p= quest.answer
-    //-   a.btn.btn-xs.btn-default(data-id=quest.id, class='delete') 삭제  
-    //-   hr
-    //- form(action='/surveys/' + survey._id + '/quests', method='POST')
-    //-   .form-header
-    //-     .form-group
-    //-       label(for='category') Category
-    //-       select.form-control(id='category', name='category')
-    //-         option(id='choice' value='객관식', selected) 객관식
-    //-         option(id='short' value='단일문항') 단일문항
-    //-         option(id='long' value='의견') 의견
-    //-     .form-group
-    //-       label(for='question') Question
-    //-       input.form-control(type='text', id='question', name='question', placeholder='Question')
-    //-     .form-group
-    //-       label(for='answer') Answer
-    //-       input.form-control(type='text', id='answer', name='answer', placeholder='Answer')  
-    //-   div.form-actions
-    //-     button.btn.btn-default(type='submit') 저장
-
-
-  

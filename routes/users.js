@@ -89,7 +89,7 @@ router.post('/', function(req, res, next) {
   });
 });
 // 회원정보 수정
-router.get('/:id/edit', function(req, res, next) {
+router.get('/:id/edit', needAuth, function(req, res, next) {
   User.findById(req.params.id, function(err, user) {
     if (err) {
       return next(err);
@@ -136,7 +136,7 @@ router.put('/:id', function(req, res, next) {
 });
 
 // 사용자 계정 삭제
-router.delete('/:id', function(req, res, next) {
+router.delete('/:id', needAuth, function(req, res, next) {
   User.findOneAndRemove({_id: req.params.id}, function(err) {
     if (err) {
       return next(err);
@@ -147,7 +147,7 @@ router.delete('/:id', function(req, res, next) {
 });
 
 // 회원 정보 프로필
-router.get('/:id', function(req, res, next) {
+router.get('/:id', needAuth, function(req, res, next) {
   User.findById(req.params.id, function(err, user) {
     if (err) {
       return next(err);
